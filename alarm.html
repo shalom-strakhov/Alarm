@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css";>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm</title>
+</head>
+<body>
+    <div class="board">
+        <div class="view">
+            <form action="https://shadas770.wixsite.com/topdesign">
+                <h1 class="h" id="h1">0</h1>
+                <h1 class="h" id="h2">0</h1>
+                <h1 class="h" id="h3">:</h1>
+                <h1 class="h" id="h4">0</h1>
+                <h1 class="h" id="h5">0</h1>
+            </form>
+        </div>
+        <div class="btns">
+        <button class="btn-start" id="btn-start" onclick="start()">START</button>
+        <button class="btn-stop" id="btn-stop" onclick="stop()">STOP</button>
+        <button class="btn-set" id="btn-set" onclick="set()">SET</button>
+    </div>
+    </div>
+    <div class="light-box" id="light-box">
+        <input type="text" class="b" id="b1" value="0">
+        <input type="text" class="b" id="b2" value="0">
+        <h1 class="b" id="dbdat">:</h1>
+        <input type="text" class="b" id="b3" value="0">
+        <input type="text" class="b" id="b4" value="0">
+        <br>
+        <button class="btn-set2" id="btn-set2" onclick="set2()">SET</button>        
+    </div>
+
+    <script>
+        
+        let counter = 5;
+
+        function timedCount() {
+            counter = document.getElementById("h5").innerText;
+            if (document.getElementById("h5").innerHTML <= 0) {
+                if (document.getElementById("h4").innerHTML == 0){
+                    if (document.getElementById("h2").innerHTML == 0) {
+                        if (document.getElementById("h1").innerHTML == 0) {
+                            clearTimeout(timeout);
+                            document.write("<h1>TIME IN UP</h1> <audio autoplay loop> <source src='oversimplified-alarm-clock-113180.mp3' type='audio/mp3'> </audio> <style> body{ background: linear-gradient(to left ,rgb(0, 162, 255), rgb(0, 255, 225));} h1 { color: white; font-family: verdana; text-align: center; font-size: 200px; margin-top: 150px;} </style>")
+                            document.getElementById("btn-stop").style.display = "none";
+                            document.getElementById("btn-start").style.display = "block";
+                            document.getElementById("btn-set").style.display = "block";
+                        }else{
+                            document.getElementById("h1").innerHTML --;
+                            document.getElementById("h2").innerHTML = 9;
+                            document.getElementById("h4").innerHTML = 5;
+                            document.getElementById("h5").innerHTML = 9;
+                            counter--;
+                            timeout = setTimeout(timedCount, 1000);
+                        }
+                    }else{
+                        document.getElementById("h2").innerHTML --;
+                        document.getElementById("h4").innerHTML = 5;
+                        document.getElementById("h5").innerHTML = 9;
+                        counter--;
+                        timeout = setTimeout(timedCount, 1000);
+                    }
+                }else{
+                    document.getElementById("h4").innerHTML --;
+                    document.getElementById("h5").innerHTML = 9;
+                    counter--;
+                    timeout = setTimeout(timedCount, 1000);
+                }
+            }else{
+                counter--;
+                timeout = setTimeout(timedCount, 1000);
+                document.getElementById("h5").innerHTML = counter;
+            }
+        }
+
+        let timeout;
+        let timer_on = 0
+
+        function start(){
+            if (!timer_on) {
+            timer_on = document.getElementById("h5").value;
+            timedCount();
+        }
+            document.getElementById("btn-start").style.display = "none";
+            document.getElementById("btn-stop").style.display = "block";
+            document.getElementById("btn-set").style.display = "none";
+        }
+
+        function stop(){
+            clearTimeout(timeout);
+            timer_on = 0;
+            document.getElementById("btn-stop").style.display = "none";
+            document.getElementById("btn-start").style.display = "block";
+            document.getElementById("btn-set").style.display = "block";
+        }
+
+        function set(){
+            document.getElementById("light-box").style.display = "block";        
+        }
+
+        function set2(){
+            document.getElementById("light-box").style.display = "none";   
+            document.getElementById("h1").innerHTML = document.getElementById("b1").value;
+            document.getElementById("h2").innerHTML = document.getElementById("b2").value;
+            document.getElementById("h4").innerHTML = document.getElementById("b3").value;
+            document.getElementById("h5").innerHTML = document.getElementById("b4").value;
+        }
+    </script>
+    <style>
+        body{
+        background: linear-gradient(to left ,rgb(0, 162, 255), rgb(0, 255, 225));
+    }
+
+    .board{
+        background: white;
+        color: gray;
+        width: 400px;
+        height: 300px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 150px;
+        border-radius: 30px;
+        text-align: center;
+        font-family: verdana;
+        box-shadow: 0 0 100px -30px black;
+        padding-top: 100px;
+        font-weight: 100;
+    }
+
+    .btn-start{
+        position: absolute;
+        width: 400px;
+        height: 70px;
+        border-radius: 0 0 30px 30px;
+        border: none;
+        background: rgb(15, 184, 0);
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 0 2px black;
+        margin-top: 110px;
+        box-shadow: inset 0 0 20px -10px black;
+        display: block;
+    }
+    
+    .btn-stop{
+        position: absolute;
+        width: 400px;
+        height: 70px;
+        border-radius: 0 0 30px 30px;
+        border: none;
+        background: crimson;
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 0 2px black;
+        margin-top:110px;
+        box-shadow: inset 0 0 20px -10px black;
+        display: none;
+    }
+    .btn-set{
+        position: absolute;
+        width: 200px;
+        height: 50px;
+        border-radius: 30px 30px 30px 30px;
+        border: none;
+        background: cornflowerblue;
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        margin-top: -200px;
+        text-shadow: 0 0 2px black;
+        box-shadow: inset 0 0 20px -10px black;
+        margin-left: 100px;
+        display: block;
+    }
+
+    .btn-start2{
+        position: absolute;
+        width: 200px;
+        height: 70px;
+        border-radius: 0 0 30px 0;
+        margin-left: 200px;
+        border: none;
+        background: rgb(15, 184, 0);
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 0 2px black;
+        margin-top: 110px;
+        box-shadow: inset 0 0 20px -10px black;
+        display: none;
+    }
+
+    .h{
+        width: 60px;
+        display: inline;
+        height: 100px;
+        font-size: 100px;
+        color: gray;
+        border-radius: 10px;
+        text-align: center;
+        letter-spacing: -10px;
+    }
+
+    #h3{
+        border: none;
+    }
+
+    .light-box{
+        margin-top: -400px;
+        width: 600px;
+        height: 300px;
+        background: white;
+        text-align: center;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: sticky;
+        border-radius: 30px;
+        padding-top: 150px;
+        display: none;
+    }
+    
+    .b{
+        text-align: center;
+        height: 120px;
+        width: 100px;
+        display: inline;
+        font-size: 100px;
+        font-weight: 900;
+        border: 2px solid rgb(227, 227, 227);
+        border-radius: 10px;
+        color: gray;
+    }
+
+    #dbdat{
+        border: none;
+    }
+
+    .btn-set2{
+        position: absolute;
+        width: 200px;
+        height: 50px;
+        border-radius: 30px 30px 30px 30px;
+        border: none;
+        background: cornflowerblue;
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        margin-top: 90px;
+        text-shadow: 0 0 2px black;
+        box-shadow: inset 0 0 20px -10px black;
+        margin-left: -100px;
+    }
+    </style>
+</body>
+</html>
