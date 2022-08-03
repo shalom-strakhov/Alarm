@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css";>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm</title>
+</head>
+<body>
+    <div class="board">
+        <div class="timer">
+            <span class="h" id="h1">00</span>
+            <span class="h" id="hh">:</span>
+            <span class="h" id="h2">00</span>
+            <div class="btns">
+            <button class="btn-start" id="btn-start">START</button>
+            <button class="btn-set" id="btn-set">SET</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+     class Timer {
+  constructor(root) {
+    root.innerHTML = Timer.getHTML();
+
+    this.el = {
+      minutes: root.querySelector("#h1"),
+      seconds: root.querySelector("#h2"),
+      control: root.querySelector(".btn-start"),
+      reset: root.querySelector(".btn-set")
+    };
+
+    this.interval = null;
+    this.remainingSeconds = 0;
+
+    this.el.control.addEventListener("click", () => {
+      if (this.interval === null) {
+        this.start();
+      } else {
+        this.stop();
+      }
+    });
+
+    this.el.reset.addEventListener("click", () => {
+      const inputMinutes = prompt("Enter number of minutes:");
+
+      if (inputMinutes < 60) {
+        this.stop();
+        this.remainingSeconds = inputMinutes * 60;
+        this.updateInterfaceTime();
+      }
+    });
+  }
+
+  updateInterfaceTime() {
+    const minutes = Math.floor(this.remainingSeconds / 60);
+    const seconds = this.remainingSeconds % 60;
+
+    this.el.minutes.textContent = minutes.toString().padStart(2, "0");
+    this.el.seconds.textContent = seconds.toString().padStart(2, "0");
+  }
+
+  updateInterfaceControls() {
+    if (this.interval === null) {
+      this.el.control.innerHTML = `<span class="material-icons">start</span>`;
+      this.el.control.classList.add("timer__btn--start");
+      this.el.control.classList.remove("timer__btn--stop");
+    } else {
+      this.el.control.innerHTML = `<span class="material-icons">pause</span>`;
+      this.el.control.classList.add("timer__btn--stop");
+      this.el.control.classList.remove("timer__btn--start");
+    }
+  }
+
+  start() {
+    
+    if (this.remainingSeconds === 0) return;
+
+    this.interval = setInterval(() => {
+      this.remainingSeconds--;
+      this.updateInterfaceTime();
+
+      if (this.remainingSeconds === 0) {
+        this.stop();
+      }
+      if (document.getElementById("h1").innerHTML == "00" && document.getElementById("h2").innerHTML == "00") {
+        document.write("<h1>TIME IN UP</h1> <audio autoplay loop> <source src='oversimplified-alarm-clock-113180.mp3' type='audio/mp3'> </audio> <style> body{ background: linear-gradient(to left ,rgb(0, 162, 255), rgb(0, 255, 225));} h1 { color: white; font-family: verdana; text-align: center; font-size: 200px; margin-top: 150px;} </style>")
+      }
+    }, 1000);
+    this.updateInterfaceControls();
+
+  }
+
+  stop() {
+    clearInterval(this.interval);
+
+    this.interval = null;
+
+    this.updateInterfaceControls();
+  }
+
+  static getHTML() {
+    return `
+			<div class="timer">
+            <span class="h" id="h1">00</span>
+            <span class="h" id="hh">:</span>
+            <span class="h" id="h2">00</span>
+            <div class="btns">
+            <button class="btn-start" id="btn-start">START</button>
+            <button class="btn-set" id="btn-set">SET</button>
+            </div>
+        </div>
+		`;
+  }
+}
+
+new Timer(
+	document.querySelector(".timer")
+);
+    </script>
+    <style>
+        body{
+        background: linear-gradient(to left ,rgb(0, 162, 255), rgb(0, 255, 225));
+    }
+
+    .board{
+        background: white;
+        color: gray;
+        width: 400px;
+        height: 300px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 150px;
+        border-radius: 30px;
+        text-align: center;
+        font-family: verdana;
+        box-shadow: 0 0 100px -30px black;
+        padding-top: 100px;
+        font-weight: 900;
+        letter-spacing: -5px;
+    }
+
+    .btn-start{
+        position: absolute;
+        width: 400px;
+        height: 70px;
+        border-radius: 0 0 30px 30px;
+        border: none;
+        background: rgb(15, 184, 0);
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        text-shadow: 0 0 2px black;
+        margin-top: 110px;
+        box-shadow: inset 0 0 20px -10px black;
+        display: block;
+    }
+    
+    .btn-set{
+        position: absolute;
+        width: 200px;
+        height: 50px;
+        border-radius: 30px 30px 30px 30px;
+        border: none;
+        background: cornflowerblue;
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        margin-top: -200px;
+        text-shadow: 0 0 2px black;
+        box-shadow: inset 0 0 20px -10px black;
+        margin-left: 100px;
+        display: block;
+    }
+
+    .h{
+        width: 60px;
+        display: inline;
+        height: 100px;
+        font-size: 100px;
+        color: gray;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    #h3{
+        border: none;
+    }
+
+    #dbdat{
+        border: none;
+    }
+
+    .btn-set2{
+        position: absolute;
+        width: 200px;
+        height: 50px;
+        border-radius: 30px 30px 30px 30px;
+        border: none;
+        background: cornflowerblue;
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+        margin-top: 90px;
+        text-shadow: 0 0 2px black;
+        box-shadow: inset 0 0 20px -10px black;
+        margin-left: -100px;
+    }
+    </style>
+</body>
+</html>
